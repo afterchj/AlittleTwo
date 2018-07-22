@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">AlittleTwo</string>
+    <string name="normal_color">#0093fe</string>
+
+    <array name="tab_main_title">
+        <item>聊天</item>
+        <item>朋友</item>
+        <item>更多</item>
+        <item>我的</item>
+    </array>
+</resources>
