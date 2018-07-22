@@ -1,0 +1,277 @@
+package com.example.after.alittletwo;
+
+import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.View;
+import android.view.Window;
+import android.widget.AbsListView;
+import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.lzy.okhttputils.OkHttpUtils;
+import com.lzy.okhttputils.callback.StringCallback;
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Response;
+
+/**
+ * Created by after on 2018/7/22.
+ */
+public class ActivityChat extends AppCompatActivity {
+
+    Button sendBtn;
+    TextView msg;
+    private ListView lvChat;
+    private NyChattingListAdapter myChattingAdapter;
+    private Data_ReceiverNews data_receiverNews;
+    private List<Data_ReceiverNews.NewsBean> newsBeanList = new ArrayList<Data_ReceiverNews.NewsBean>();
+    private String userid, taskid;
+    private int allcount;
+    private SwipeRefreshLayout uploadmore;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.activitychat);
+        lvChat = (ListView) findViewById(R.id.lv_chat);
+        sendBtn = (Button) findViewById(R.id.sendBtn);
+        msg = (TextView) findViewById(R.id.message);
+
+        //        userid = "d8428fb4e425425db75c1c7d1e47bbc0";//安琪宝贝;
+        userid = "d35558c810fd4b9ea3b7482af39ad51d";//王大锤
+        taskid = "cd48e5b34c29448c98d20fa6869c3647";
+        showNow();
+//        initView();
+        sendBtn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                String str = msg.getText().toString();
+                onSendBtnClick(str);
+            }
+        });
+    }
+
+    private void initView() {
+        uploadmore = (SwipeRefreshLayout) findViewById(R.id.uploadmore);
+
+//        initListView();
+        uploadmore.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_green_light,
+                android.R.color.holo_orange_light);
+        //上拉加载历史记录
+        uploadmore.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Handler handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            OkHttpUtils.get(Http_Api.URL_NewReceiver)
+                                    .params("userid", userid)
+                                    .params("taskid", taskid)
+                                    .execute(new StringCallback() {
+                                        @Override
+                                        public void onSuccess(String s, Call call, Response response) {
+                                            data_receiverNews = JsonUtil.parseJsonToBean(s, Data_ReceiverNews.class);
+                                            allcount = Integer.parseInt(data_receiverNews.getResult());
+                                            Log.e("initView()返回", allcount + "条数据");
+
+                                            if (allcount != 0) {
+                                                if (newsBeanList != null) {
+                                                    newsBeanList.clear();
+                                                }
+                                                newsBeanList = data_receiverNews.getNews();
+                                                myChattingAdapter = new NyChattingListAdapter(ActivityChat.this, userid, newsBeanList);
+                                                lvChat.setAdapter(myChattingAdapter);
+                                                myChattingAdapter.notifyDataSetChanged();
+                                                uploadmore.setRefreshing(false);
+                                            } else {
+//                                                ToastUtil.showToast("对不起，没有更多消息了");
+                                                Toast.makeText(ActivityChat.this, "对不起没有更多消息了", Toast.LENGTH_SHORT).show();
+                                                uploadmore.setRefreshing(false);
+                                            }
+
+                                        }
+                                    });
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, 2000);
+            }
+        });
+    }
+
+//    private void initListView() {
+//        showNow();
+//        uploadmoreadd();
+//    }
+
+    private void showNow() {
+
+        try {
+            OkHttpUtils.get(Http_Api.URL_NewReceiver)
+                    .params("userid", userid)
+                    .params("taskid", taskid)
+                    .execute(new StringCallback() {
+                        @Override
+                        public void onSuccess(String s, Call call, Response response) {
+                            Log.e("initView()返回", allcount + "条数据");
+                            data_receiverNews = JsonUtil.parseJsonToBean(s, Data_ReceiverNews.class);
+                            allcount = Integer.parseInt(data_receiverNews.getResult());
+                            if (allcount != 0) {
+                                if (newsBeanList != null) {
+                                    newsBeanList.clear();
+                                }
+                                newsBeanList = data_receiverNews.getNews();
+                                myChattingAdapter = new NyChattingListAdapter(ActivityChat.this, userid, newsBeanList);
+                                lvChat.setAdapter(myChattingAdapter);
+                                myChattingAdapter.notifyDataSetChanged();
+//                                uploadmore.setRefreshing(false);
+                            } else {
+//                              ToastUtil.showToast("对不起，没有更多消息了");
+                                Toast.makeText(ActivityChat.this, "对不起没有更多消息了", Toast.LENGTH_SHORT).show();
+//                                uploadmore.setRefreshing(false);
+                            }
+
+                        }
+                    });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+//        try {
+//            OkHttpUtils.get(Http_Api.URL_NewReceiver)
+//                    .params("userid", userid)
+//                    .params("taskid", taskid)
+//                    .execute(new StringCallback() {
+//                        @Override
+//                        public void onSuccess(String s, Call call, Response response) {
+//                            data_receiverNews = JsonUtil.parseJsonToBean(s, Data_ReceiverNews.class);
+//                            allcount = Integer.parseInt(data_receiverNews.getResult());
+//                            Log.e("ShowNow()返回", allcount + "条数据");
+//                            if (data_receiverNews.getNews() != null) {
+//                                newsBeanList = data_receiverNews.getNews();
+//                            }
+//                            lvChat.setAdapter(myChattingAdapter);
+//                        }
+//                    });
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+    }
+
+    private void uploadmoreadd() {
+        lvChat.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                if (scrollState == SCROLL_STATE_IDLE) {
+                    int lastposition = lvChat.getLastVisiblePosition();//最后一个item的位置
+                    if (lastposition == lvChat.getCount() - 1) {
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    OkHttpUtils.get(Http_Api.URL_NewReceiver)
+                                            .params("userid", userid)
+                                            .params("taskid", taskid)
+                                            .execute(new StringCallback() {
+                                                @Override
+                                                public void onSuccess(String s, Call call, Response response) {
+//                                                    LogUtil.d("返回值",s);
+                                                    data_receiverNews = JsonUtil.parseJsonToBean(s, Data_ReceiverNews.class);
+                                                    allcount = Integer.parseInt(data_receiverNews.getResult());
+                                                    if (newsBeanList != null) {
+                                                        newsBeanList.clear();
+                                                    }
+                                                    newsBeanList = data_receiverNews.getNews();
+
+                                                    lvChat.setAdapter(myChattingAdapter);
+                                                    myChattingAdapter.notifyDataSetChanged();
+                                                    Toast.makeText(ActivityChat.this, "加载完成", Toast.LENGTH_SHORT).show();
+//                                                    ToastUtil.showToast("加载完成");
+
+                                                }
+                                            });
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }, 2000);
+                    }
+                }
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+            }
+        });
+    }
+
+    //发送信息联网
+    private void onSendBtnClick(String msg) {
+        if (!TextUtils.isEmpty(msg)) {
+            final Data_ReceiverNews.NewsBean bean = new Data_ReceiverNews.NewsBean();
+            bean.setNewscontent(msg);
+            bean.setCreatime(getTime());
+            try {
+                OkHttpUtils.post(Http_Api.URL_NewSend)
+                        .params("taskid", taskid)
+                        .params("userid", userid)
+                        .params("newscontent", msg)
+                        .execute(new StringCallback() {
+                            @Override
+                            public void onSuccess(String s, Call call, Response response) {
+//                                LogUtil.d("返回值",s);
+                                Data_uploadBack_tag back_tag = JsonUtil.parseJsonToBean(s, Data_uploadBack_tag.class);
+                                if (back_tag.getResult().equals("0")) {
+//                                    ToastUtil.showToast("非法的表情符号！");
+                                    Toast.makeText(ActivityChat.this, "非法的表情符号!", Toast.LENGTH_SHORT).show();
+                                } else if (back_tag.getResult().equals("1")) {
+                                    showNow();//这里选择重新联网刷新列表，而不是在集合里手动添加数据
+                                    myChattingAdapter.notifyDataSetChanged();
+                                    scrollToBottom();
+                                }
+                            }
+
+                        });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private String getTime() {
+        Date date = new Date(System.currentTimeMillis());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm ss");
+        return dateFormat.format(date);
+    }
+
+    private void scrollToBottom() {//设置滚动到底部
+        lvChat.requestLayout();
+        lvChat.post(new Runnable() {
+            @Override
+            public void run() {
+                lvChat.setSelection(lvChat.getBottom() + 2);
+            }
+        });
+    }
+
+
+}

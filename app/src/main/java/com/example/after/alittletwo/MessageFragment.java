@@ -1,5 +1,6 @@
 package com.example.after.alittletwo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,7 +10,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -59,7 +59,8 @@ public class MessageFragment extends Fragment {
             // 第position项被单击时激发该方法
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getContext(), names[position], Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(getActivity(), ActivityChat.class);
+                startActivity(i);
             }
         });
         // 为ListView的列表项的选中事件绑定事件监听器
@@ -67,7 +68,8 @@ public class MessageFragment extends Fragment {
             // 第position项被选中时激发该方法
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                System.out.println(names[position] + "被选中了");
+                Intent i = new Intent(getActivity(), ActivityChat.class);
+                startActivity(i);
             }
 
             @Override

@@ -7,7 +7,16 @@
 
     <color name="main_bottom_tab_textcolor_normal">#999999</color>
     <color name="main_bottom_tab_textcolor_selected">@color/normal_color</color>
-
-
     <color name="normal_color">#0093fe</color>
+
+    <color name="green">#45c01a</color>
+    <color name="white">#ffffff</color>
+    <color name="gray">#cccccc</color>
+    <color name="black">#000000</color>
+    <color name="titlecolor">#445566</color>
+
+    <color name="titbar_color">#0589ba</color>
+    <color name="titbar_color2">#00c3e8</color>
+
+    <color name="titbar">#4675FF</color>
 </resources>
