@@ -54,7 +54,7 @@ public class ActivityChat extends AppCompatActivity {
         userid = "d35558c810fd4b9ea3b7482af39ad51d";//王大锤
         taskid = "cd48e5b34c29448c98d20fa6869c3647";
         showNow();
-//        initView();
+        initView();
         sendBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -68,7 +68,7 @@ public class ActivityChat extends AppCompatActivity {
     private void initView() {
         uploadmore = (SwipeRefreshLayout) findViewById(R.id.uploadmore);
 
-//        initListView();
+        initListView();
         uploadmore.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_green_light,
                 android.R.color.holo_orange_light);
         //上拉加载历史记录
@@ -116,10 +116,10 @@ public class ActivityChat extends AppCompatActivity {
         });
     }
 
-//    private void initListView() {
+    private void initListView() {
 //        showNow();
-//        uploadmoreadd();
-//    }
+        uploadmoreadd();
+    }
 
     private void showNow() {
 
@@ -200,19 +200,17 @@ public class ActivityChat extends AppCompatActivity {
                                                         newsBeanList.clear();
                                                     }
                                                     newsBeanList = data_receiverNews.getNews();
-
+                                                    myChattingAdapter = new NyChattingListAdapter(ActivityChat.this, userid, newsBeanList);
                                                     lvChat.setAdapter(myChattingAdapter);
                                                     myChattingAdapter.notifyDataSetChanged();
                                                     Toast.makeText(ActivityChat.this, "加载完成", Toast.LENGTH_SHORT).show();
-//                                                    ToastUtil.showToast("加载完成");
-
                                                 }
                                             });
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
                             }
-                        }, 2000);
+                        }, 1000);
                     }
                 }
             }
