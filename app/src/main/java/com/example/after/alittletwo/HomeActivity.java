@@ -1,13 +1,18 @@
 package com.example.after.alittletwo;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
+import android.widget.Toast;
 
 import com.example.after.alittletwo.adapeter.TabFragmentAdapter;
 import com.example.after.alittletwo.views.TabContainerView;
@@ -18,10 +23,12 @@ import com.example.after.alittletwo.views.TabContainerView;
 
 public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageChangeListener {
 
-//    Button chatBtn;
+    //    Button chatBtn;
 //    Button bookBtn;
 //    Button moreBtn;
 //    Button mineBtn;
+    private SharedPreferences pref;
+    private SharedPreferences.Editor editor;
     private String[] names = new String[]
             {"虎头", "弄玉", "李清照", "李白"};
     private String[] descs = new String[]
@@ -70,67 +77,28 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.home_activity);
-        initViews();
-
+        pref = PreferenceManager.getDefaultSharedPreferences(this);
+        editor = pref.edit();
+        Boolean isLogin = pref.getBoolean("isLogin", false);
+        if (isLogin) {
+            setContentView(R.layout.home_activity);
+            initViews();
+        } else {
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
+        }
+        Log.e("result", "test message");
 //        initBtn();
-//        bookBtn.setOnClickListener(new PublicOnClickListen(this, new AddressBooksActivity()));
-
-        // 创建一个List集合，List集合的元素是Map
-//        List<Map<String, Object>> listItems = new ArrayList<Map<String, Object>>();
-//        for (int i = 0; i < names.length; i++) {
-//            Map<String, Object> listItem = new HashMap<String, Object>();
-//            listItem.put("header", imageIds[i]);
-//            listItem.put("personName", names[i]);
-//            listItem.put("desc", descs[i]);
-//            listItems.add(listItem);
-//        }
-//        // 创建一个SimpleAdapter
-//        SimpleAdapter simpleAdapter = new SimpleAdapter(this, listItems,
-//                R.layout.simple_item,
-//                new String[]{"personName", "header", "desc"},
-//                new int[]{R.id.name, R.id.header, R.id.desc});
-//
-//        ListView list = (ListView) findViewById(R.id.mylist);
-//        // 为ListView设置Adapter
-//        list.setAdapter(simpleAdapter);
-//        // 为ListView的列表项的单击事件绑定事件监听器
-//        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            // 第position项被单击时激发该方法
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Toast.makeText(HomeActivity.this, names[position], Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//        // 为ListView的列表项的选中事件绑定事件监听器
-//        list.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-//            // 第position项被选中时激发该方法
-//            @Override
-//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//                System.out.println(names[position] + "被选中了");
-//            }
-//
-//            @Override
-//            public void onNothingSelected(AdapterView<?> parent) {
-//            }
-//        });
     }
 
 
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-
         if (id == R.id.logout) {
             Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
             startActivity(intent);
@@ -173,6 +141,7 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
         mPager.setCurrentItem(getIntent().getIntExtra("tab", 0));
 
     }
+
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
@@ -185,6 +154,21 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
 
     @Override
     public void onPageScrollStateChanged(int state) {
-
     }
+
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            //启动一个意图,回到桌面
+            Intent backHome = new Intent(Intent.ACTION_MAIN);
+            backHome.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            backHome.addCategory(Intent.CATEGORY_HOME);
+            startActivity(backHome);
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
 }

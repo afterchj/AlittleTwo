@@ -26,7 +26,7 @@ public class GroupFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.address_activity, container, false);
+        final View view = inflater.inflate(R.layout.address_activity, container, false);
         ListView listView = view.findViewById(R.id.myList);
 
         BaseAdapter adapter = new BaseAdapter() {
@@ -48,15 +48,22 @@ public class GroupFragment extends Fragment {
 
             @Override
             public View getView(int position, View convertView, ViewGroup parent) {
-                LinearLayout line = new LinearLayout(getActivity());
-                line.setOrientation(LinearLayout.HORIZONTAL);
-                ImageView imageView = new ImageView(getActivity());
-                imageView.setImageResource(imageIds[position % 4]);
-                line.addView(imageView);
-                TextView textView = new TextView(getActivity());
-                textView.setText("第" + (position + 1) + "个好友");
-                line.addView(textView);
-                return line;
+                View friendView = LayoutInflater.from(getContext()).inflate(R.layout.friend_item, null);
+
+                ImageView friendImage = friendView.findViewById(R.id.friend_icon);
+                TextView friendName = friendView.findViewById(R.id.friend_name);
+                friendImage.setImageResource(imageIds[position % 4]);
+                friendName.setText("第" + (position + 1) + "个好友");
+
+//                LinearLayout line = new LinearLayout(getActivity());
+//                line.setOrientation(LinearLayout.HORIZONTAL);
+//                ImageView imageView = new ImageView(getActivity());
+//                imageView.setImageResource(imageIds[position % 4]);
+//                line.addView(imageView);
+//                TextView textView = new TextView(getActivity());
+//                textView.setText("第" + (position + 1) + "个好友");
+//                line.addView(textView);
+                return friendView;
             }
         };
         listView.setAdapter(adapter);
