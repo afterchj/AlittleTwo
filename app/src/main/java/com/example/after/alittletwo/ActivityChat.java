@@ -36,6 +36,7 @@ public class ActivityChat extends AppCompatActivity {
     Button sendBtn;
     EditText msg;
     TextView text;
+    int iconId;
     private ListView lvChat;
     private NyChattingListAdapter myChattingAdapter;
     private Data_ReceiverNews data_receiverNews;
@@ -55,8 +56,10 @@ public class ActivityChat extends AppCompatActivity {
         initView();
         showNow(false);
 
+
         Intent intent = getIntent();
         final String name = intent.getStringExtra("name");
+        iconId = intent.getIntExtra("icon", R.drawable.meinv2);
         final Boolean flag = intent.getBooleanExtra("flag", true);
 
         text.setText(name);
@@ -115,7 +118,7 @@ public class ActivityChat extends AppCompatActivity {
                                 if (flag) {
                                     newsBeanList.subList(newsBeanList.size() - 3, newsBeanList.size());
                                 }
-                                myChattingAdapter = new NyChattingListAdapter(ActivityChat.this, userid, newsBeanList);
+                                myChattingAdapter = new NyChattingListAdapter(ActivityChat.this, userid, iconId, newsBeanList);
                                 lvChat.setAdapter(myChattingAdapter);
                                 myChattingAdapter.notifyDataSetChanged();
                                 lvChat.setSelection(newsBeanList.size());
