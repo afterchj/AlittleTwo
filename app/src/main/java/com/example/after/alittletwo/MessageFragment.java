@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -60,6 +61,9 @@ public class MessageFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i = new Intent(getActivity(), ActivityChat.class);
+                i.putExtra("name",names[position]);
+                i.putExtra("icon",imageIds[position]);
+                i.putExtra("flag",true);
                 startActivity(i);
             }
         });
@@ -68,8 +72,7 @@ public class MessageFragment extends Fragment {
             // 第position项被选中时激发该方法
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Intent i = new Intent(getActivity(), ActivityChat.class);
-                startActivity(i);
+                Toast.makeText(getActivity(), names[position] + "被选中了！", Toast.LENGTH_SHORT).show();
             }
 
             @Override

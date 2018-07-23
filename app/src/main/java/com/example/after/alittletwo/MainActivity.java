@@ -17,20 +17,33 @@ import android.widget.Toast;
 public class MainActivity extends AppCompatActivity implements GestureDetector.OnGestureListener {
 
     GestureDetector detector;
-    Button button;
+//    Button button;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        button = (Button) findViewById(R.id.toLogin);
-        button.setOnClickListener(new View.OnClickListener() {
+        new Thread(new Runnable() {
             @Override
-            public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            public void run() {
+                try {
+                    Thread.sleep(2000);
+                    Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
             }
-        });
+        }).start();
+
+//        button = (Button) findViewById(R.id.toLogin);
+//        button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                startActivity(new Intent(MainActivity.this, LoginActivity.class));
+//            }
+//        });
         detector = new GestureDetector(this, this);
         detector.setIsLongpressEnabled(true);
     }
@@ -78,11 +91,11 @@ public class MainActivity extends AppCompatActivity implements GestureDetector.O
             //this.flipper.setInAnimation(AnimationUtils.loadAnimation(this, R.anim.push_left_in));
             //this.flipper.setOutAnimation(AnimationUtils.loadAnimation(this, R.anim.push_left_out));
             Log.e("result", "向左滑，右边显示");
-            Toast.makeText(this,"向左滑，右边显示",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "向左滑，右边显示", Toast.LENGTH_SHORT).show();
         }
         if (e1.getX() - e2.getX() < -120) {//向右滑，左边显示
             Log.e("result", "向右滑，左边显示");
-            Toast.makeText(this,"向右滑，左边显示",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "向右滑，左边显示", Toast.LENGTH_SHORT).show();
         }
         return false;
     }

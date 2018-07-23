@@ -19,4 +19,7 @@
     <color name="titbar_color2">#00c3e8</color>
 
     <color name="titbar">#4675FF</color>
+
+    <color name="message_list_line">#999999</color>
+    <color name="message_list_line_fill">#ff33b5e5</color>
 </resources>
