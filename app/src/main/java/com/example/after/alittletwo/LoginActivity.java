@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Window;
@@ -31,10 +30,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         pref = PreferenceManager.getDefaultSharedPreferences(this);
         editor = pref.edit();
-        Boolean isLogin = pref.getBoolean("isLogin", false);
-        if (isLogin) {
-            startActivity(new Intent(this, HomeActivity.class));
-        }
         setContentView(R.layout.login_activity);
         initBtn();
         Boolean isRemember = pref.getBoolean("remember_me", false);

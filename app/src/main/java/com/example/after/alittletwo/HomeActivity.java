@@ -12,7 +12,6 @@ import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
-import android.widget.Toast;
 
 import com.example.after.alittletwo.adapeter.TabFragmentAdapter;
 import com.example.after.alittletwo.views.TabContainerView;
@@ -28,7 +27,6 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
 //    Button moreBtn;
 //    Button mineBtn;
     private SharedPreferences pref;
-    private SharedPreferences.Editor editor;
     private String[] names = new String[]
             {"虎头", "弄玉", "李清照", "李白"};
     private String[] descs = new String[]
@@ -78,7 +76,6 @@ public class HomeActivity extends AppCompatActivity implements ViewPager.OnPageC
         super.onCreate(savedInstanceState);
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         pref = PreferenceManager.getDefaultSharedPreferences(this);
-        editor = pref.edit();
         Boolean isLogin = pref.getBoolean("isLogin", false);
         if (isLogin) {
             setContentView(R.layout.home_activity);
