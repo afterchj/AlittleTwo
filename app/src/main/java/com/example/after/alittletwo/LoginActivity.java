@@ -62,10 +62,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 editor.putBoolean("remember_me", true);
                 editor.putString("name", name);
                 editor.putString("passwd", pwd);
-                editor.putBoolean("isLogin", true);
             } else {
                 editor.clear();
             }
+            editor.putBoolean("isLogin", true);
             editor.commit();
             Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
             startActivity(intent);
