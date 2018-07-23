@@ -26,11 +26,11 @@ public class NyChattingListAdapter extends BaseAdapter {
     public int isMesend;
     public int iconId;
 
-    public NyChattingListAdapter(Activity activity, String id,int iconId, List<Data_ReceiverNews.NewsBean> list) {
+    public NyChattingListAdapter(Activity activity, String id, int iconId, List<Data_ReceiverNews.NewsBean> list) {
         this.mActivity = activity;
         this.myuserid = id;
         this.mData = list;
-        this.iconId=iconId;
+        this.iconId = iconId;
         mInflater = LayoutInflater.from(activity);
     }
 
@@ -99,7 +99,7 @@ public class NyChattingListAdapter extends BaseAdapter {
             String tim = time.substring(0, time.length() - 2);
             rightholder.sendtime.setText(tim);//设置头像和姓名注释了
             rightholder.tv_content.setText(bean.getNewscontent());
-//            rightholder.name.setText(bean.getUserName());
+            rightholder.name.setText("");
 //            if (SharedPreferencesUtil.readAvatar(mActivity)!=null){
 //                Glide.with(mActivity).load(SharedPreferencesUtil.readAvatar(mActivity)).into(rightholder.iv_avatar);
 //            }
@@ -110,7 +110,7 @@ public class NyChattingListAdapter extends BaseAdapter {
             rightholder.tv_content.setText(bean.getNewscontent());
             rightholder.iv_avatar.setImageResource(iconId);
 
-//            rightholder.name.setText(bean.getUserName());
+            rightholder.name.setText("");
 //            if (bean.getPath()!=null){
 //                Glide.with(mActivity).load(bean.getPath()).into(rightholder.iv_avatar);
 //            }
