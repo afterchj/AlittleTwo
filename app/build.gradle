@@ -28,4 +28,7 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.lzy.net:okhttputils:1.8.1'
     compile 'com.google.code.gson:gson:2.2.4'
+    compile 'com.squareup.retrofit2:retrofit:2.0.2'
+    compile 'com.squareup.retrofit2:converter-gson:2.0.2' // 用Gson解析json的转换器
+    compile 'com.squareup.retrofit2:converter-scalars:2.1.0'
 }
