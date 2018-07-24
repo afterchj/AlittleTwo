@@ -5,8 +5,9 @@ package com.example.after.alittletwo.entity;
  */
 
 public enum Constant {
-    HEAD("http://www.uichange.com/ums3-share/user/icon.png"),
-    WEB_SSM("http://192.168.51.75:8080/web-ssm/file/"),
+    HEAD("http://www.uichange.com/ums3-share/user/14715689.jpg"),
+    WEB_SSM("http://www.uichange.com/ums3-share/user/qrcode.jpg"),
+    DEFAULT("http://www.uichange.com/ums3-share/"),
     UMS3_CLIENT2("http://www.uichange.com/ums3-client2/heads/");
 
     private String baseUrl;

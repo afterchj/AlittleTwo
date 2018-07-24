@@ -18,6 +18,7 @@ public class MyImageView extends ImageView {
     public static final int GET_DATA_SUCCESS = 1;
     public static final int NETWORK_ERROR = 2;
     public static final int SERVER_ERROR = 3;
+    private Bitmap bitmap;
     //子线程不能操作UI，通过Handler设置图片
     private Handler handler = new Handler() {
         @Override
@@ -69,7 +70,9 @@ public class MyImageView extends ImageView {
                     if (code == 200) {
                         InputStream inputStream = connection.getInputStream();
                         //使用工厂把网络的输入流生产Bitmap
-                        Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                        if (bitmap == null) {
+                            bitmap = BitmapFactory.decodeStream(inputStream);
+                        }
                         //利用Message把图片发给Handler
                         Message msg = Message.obtain();
                         msg.obj = bitmap;

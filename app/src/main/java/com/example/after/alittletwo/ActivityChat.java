@@ -2,6 +2,7 @@ package com.example.after.alittletwo;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -19,6 +20,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.after.alittletwo.entity.Constant;
+import com.example.after.alittletwo.util.BitmapFileSetting;
+import com.example.after.alittletwo.util.PostRequest_Interface;
+import com.example.after.alittletwo.util.RetrofitUtil;
 import com.lzy.okhttputils.OkHttpUtils;
 import com.lzy.okhttputils.callback.StringCallback;
 
@@ -29,6 +34,8 @@ import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
+import retrofit2.Callback;
 
 import static android.graphics.BitmapFactory.decodeFile;
 
@@ -48,6 +55,7 @@ public class ActivityChat extends AppCompatActivity {
     private List<Data_ReceiverNews.NewsBean> newsBeanList = new ArrayList<Data_ReceiverNews.NewsBean>();
     private String userid, taskid;
     private int allcount;
+    private Bitmap bitmap;
 //    private SwipeRefreshLayout uploadmore;
 
     @Override
@@ -59,6 +67,12 @@ public class ActivityChat extends AppCompatActivity {
         userid = "d35558c810fd4b9ea3b7482af39ad51d";//王大锤
         taskid = "cd48e5b34c29448c98d20fa6869c3647";
         initView();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                bitmap = BitmapFileSetting.getByUrl(Constant.HEAD.getBaseUrl());
+            }
+        }).start();
         showNow(false);
 
 
@@ -123,7 +137,7 @@ public class ActivityChat extends AppCompatActivity {
                                 if (flag) {
                                     newsBeanList.subList(newsBeanList.size() - 3, newsBeanList.size());
                                 }
-                                myChattingAdapter = new NyChattingListAdapter(ActivityChat.this, userid, iconId, newsBeanList);
+                                myChattingAdapter = new NyChattingListAdapter(ActivityChat.this, bitmap, userid, iconId, newsBeanList);
                                 lvChat.setAdapter(myChattingAdapter);
                                 myChattingAdapter.notifyDataSetChanged();
                                 lvChat.setSelection(newsBeanList.size());

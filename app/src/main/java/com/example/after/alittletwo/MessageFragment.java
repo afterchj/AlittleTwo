@@ -1,9 +1,12 @@
 package com.example.after.alittletwo;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +15,20 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
+import com.example.after.alittletwo.entity.Constant;
+import com.example.after.alittletwo.util.PostRequest_Interface;
+import com.example.after.alittletwo.util.RetrofitUtil;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by after on 2018/7/21.
@@ -61,9 +74,9 @@ public class MessageFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent i = new Intent(getActivity(), ActivityChat.class);
-                i.putExtra("name",names[position]);
-                i.putExtra("icon",imageIds[position]);
-                i.putExtra("flag",true);
+                i.putExtra("name", names[position]);
+                i.putExtra("icon", imageIds[position]);
+                i.putExtra("flag", true);
                 startActivity(i);
             }
         });
@@ -81,4 +94,5 @@ public class MessageFragment extends Fragment {
         });
         return view;
     }
+
 }
