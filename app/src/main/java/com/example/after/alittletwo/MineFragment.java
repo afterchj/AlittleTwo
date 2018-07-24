@@ -51,7 +51,7 @@ public class MineFragment extends Fragment {
     private TextView nameView;
     private View setting;
 
-    String path = Environment.getExternalStorageDirectory() + "/aaa/bbb/";
+    private String path = Environment.getExternalStorageDirectory() + "/aaa/bbb/";
     private String fileName = "14715689.jpg";
     private MyImageView mImage;
     private View view;

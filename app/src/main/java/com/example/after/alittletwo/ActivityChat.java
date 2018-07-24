@@ -1,7 +1,9 @@
 package com.example.after.alittletwo;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -28,6 +30,8 @@ import java.util.List;
 import okhttp3.Call;
 import okhttp3.Response;
 
+import static android.graphics.BitmapFactory.decodeFile;
+
 /**
  * Created by after on 2018/7/22.
  */
@@ -37,6 +41,7 @@ public class ActivityChat extends AppCompatActivity {
     EditText msg;
     TextView text;
     int iconId;
+    private String filePath = Environment.getExternalStorageDirectory() + "/aaa/bbb/14715689.jpg";
     private ListView lvChat;
     private NyChattingListAdapter myChattingAdapter;
     private Data_ReceiverNews data_receiverNews;
@@ -201,6 +206,5 @@ public class ActivityChat extends AppCompatActivity {
             }
         });
     }
-
 
 }

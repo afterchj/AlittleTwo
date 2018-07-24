@@ -1,51 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="8dp"
-    android:paddingBottom="8dp">
+    android:paddingBottom="8dp"
+    android:paddingTop="8dp">
 
-    <ImageView
+    <com.example.after.alittletwo.views.MyImageView
         android:id="@+id/iv_avatar"
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:layout_marginLeft="12dp"
-        android:src="@drawable/meinv2" >
-    </ImageView>
+        android:src="@drawable/meinv2" />
 
     <TextView
         android:id="@+id/chatname"
-        android:text="安琪宝贝"
-        android:textSize="10sp"
-        android:textColor="@color/white"
-        android:layout_marginLeft="15dp"
-        android:layout_below="@+id/iv_avatar"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/iv_avatar"
+        android:layout_marginLeft="15dp"
+        android:text="安琪宝贝"
+        android:textColor="@color/white"
+        android:textSize="10sp" />
 
     <TextView
         android:id="@+id/tv_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:textColor="#353535"
-        android:textSize="16sp"
         android:layout_marginLeft="5dp"
         android:layout_toRightOf="@id/iv_avatar"
         android:background="@drawable/message_left"
+        android:paddingBottom="10dp"
         android:paddingLeft="15dp"
         android:paddingRight="10dp"
         android:paddingTop="10dp"
-        android:paddingBottom="10dp"/>
+        android:textColor="#353535"
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/sendtime"
-        android:text="19:42"
-        android:textSize="9sp"
-        android:layout_marginLeft="60dp"
-        android:layout_below="@id/tv_content"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_content"
+        android:layout_marginLeft="60dp"
+        android:text="19:42"
+        android:textSize="9sp" />
 
 </RelativeLayout>

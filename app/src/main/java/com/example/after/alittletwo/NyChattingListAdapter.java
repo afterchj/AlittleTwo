@@ -1,12 +1,16 @@
 package com.example.after.alittletwo;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.after.alittletwo.entity.Constant;
+import com.example.after.alittletwo.views.MyImageView;
 
 import java.util.List;
 
@@ -99,6 +103,7 @@ public class NyChattingListAdapter extends BaseAdapter {
             String tim = time.substring(0, time.length() - 2);
             rightholder.sendtime.setText(tim);//设置头像和姓名注释了
             rightholder.tv_content.setText(bean.getNewscontent());
+            rightholder.iv_avatar.setImageURL(Constant.HEAD.getBaseUrl());
             rightholder.name.setText("");
 //            if (SharedPreferencesUtil.readAvatar(mActivity)!=null){
 //                Glide.with(mActivity).load(SharedPreferencesUtil.readAvatar(mActivity)).into(rightholder.iv_avatar);
@@ -122,7 +127,7 @@ public class NyChattingListAdapter extends BaseAdapter {
 
 
     public final class ViewHolderText {
-        public ImageView iv_avatar;
+        public MyImageView iv_avatar;
         public TextView tv_content;
         public TextView sendtime;
         public TextView name;
