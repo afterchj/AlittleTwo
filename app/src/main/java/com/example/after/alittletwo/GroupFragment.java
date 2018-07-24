@@ -1,11 +1,13 @@
 package com.example.after.alittletwo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -54,19 +56,23 @@ public class GroupFragment extends Fragment {
                 TextView friendName = friendView.findViewById(R.id.friend_name);
                 friendImage.setImageResource(imageIds[position % 4]);
                 friendName.setText("第" + (position + 1) + "个好友");
-
-//                LinearLayout line = new LinearLayout(getActivity());
-//                line.setOrientation(LinearLayout.HORIZONTAL);
-//                ImageView imageView = new ImageView(getActivity());
-//                imageView.setImageResource(imageIds[position % 4]);
-//                line.addView(imageView);
-//                TextView textView = new TextView(getActivity());
-//                textView.setText("第" + (position + 1) + "个好友");
-//                line.addView(textView);
                 return friendView;
             }
         };
         listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(getActivity(), ActivityChat.class);
+                intent.putExtra("mineid", "b4d41be2c70144eca7001e95b6078114");
+                intent.putExtra("userid", "f8d95cf3a35e412099b333e1cd32f850");
+                intent.putExtra("taskid", "532ac0f3844444e0bd334818953c5474");
+                intent.putExtra("name", "陌生人");
+                intent.putExtra("icon", R.drawable.meinv1);
+                intent.putExtra("flag", true);
+                startActivity(intent);
+            }
+        });
         return view;
     }
 }

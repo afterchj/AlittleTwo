@@ -71,7 +71,7 @@ public class BitmapFileSetting {
      * @throws IOException
      */
     public static Bitmap decodeFile(String filePath) throws IOException {
-        Bitmap b = null;
+        Bitmap b;
         int IMAGE_MAX_SIZE = 600;
 
         File f = new File(filePath);

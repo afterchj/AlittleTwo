@@ -47,8 +47,8 @@ public class ActivityChat extends AppCompatActivity {
     Button sendBtn;
     EditText msg;
     TextView text;
-    int iconId;
-    private String filePath = Environment.getExternalStorageDirectory() + "/aaa/bbb/14715689.jpg";
+    private int iconId;
+    private String filePath = Environment.getExternalStorageDirectory() + "/aaa/chat_icon.jpg";
     private ListView lvChat;
     private NyChattingListAdapter myChattingAdapter;
     private Data_ReceiverNews data_receiverNews;
@@ -61,27 +61,34 @@ public class ActivityChat extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                bitmap = BitmapFileSetting.getByUrl(Constant.HEAD.getBaseUrl());
+//            }
+//        }).start();
         supportRequestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activitychat);
-//        userid = "d8428fb4e425425db75c1c7d1e47bbc0";//安琪宝贝;
+        bitmap=BitmapFactory.decodeFile(filePath);
+        initView();
+        //        userid = "d8428fb4e425425db75c1c7d1e47bbc0";//安琪宝贝;
         userid = "d35558c810fd4b9ea3b7482af39ad51d";//王大锤
         taskid = "cd48e5b34c29448c98d20fa6869c3647";
-        initView();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                bitmap = BitmapFileSetting.getByUrl(Constant.HEAD.getBaseUrl());
-            }
-        }).start();
+        Intent intent = getIntent();
+        String name = intent.getStringExtra("name");
+        iconId = intent.getIntExtra("icon", R.drawable.meinv2);
+        String friendId = intent.getStringExtra("mineid");
+        String topicId = intent.getStringExtra("taskid");
+        if (friendId != null && !friendId.isEmpty()) {
+            userid = friendId;
+        }
+        if (topicId != null && !topicId.isEmpty()) {
+            taskid = topicId;
+        }
+        text.setText(name);
         showNow(false);
 
-
-        Intent intent = getIntent();
-        final String name = intent.getStringExtra("name");
-        iconId = intent.getIntExtra("icon", R.drawable.meinv2);
-        final Boolean flag = intent.getBooleanExtra("flag", true);
-
-        text.setText(name);
         sendBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -96,7 +103,6 @@ public class ActivityChat extends AppCompatActivity {
             @Override
             public void onFocusChange(View view, boolean b) {
                 if (b) {
-                    Log.e("result", name + "\t" + flag);
                     showNow(true);
                 }
             }
@@ -134,7 +140,7 @@ public class ActivityChat extends AppCompatActivity {
                                     newsBeanList.clear();
                                 }
                                 newsBeanList = data_receiverNews.getNews();
-                                if (flag) {
+                                if (flag && newsBeanList.size() > 3) {
                                     newsBeanList.subList(newsBeanList.size() - 3, newsBeanList.size());
                                 }
                                 myChattingAdapter = new NyChattingListAdapter(ActivityChat.this, bitmap, userid, iconId, newsBeanList);

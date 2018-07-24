@@ -19,8 +19,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -51,8 +49,8 @@ public class MineFragment extends Fragment {
     private TextView nameView;
     private View setting;
 
-    private String path = Environment.getExternalStorageDirectory() + "/aaa/bbb/";
-    private String fileName = "14715689.jpg";
+    private String path = Environment.getExternalStorageDirectory() + "/aaa/";
+    private String fileName = "chat_icon.jpg";
     private MyImageView mImage;
     private View view;
     protected static final int CHOOSE_PICTURE = 0;
@@ -198,7 +196,7 @@ public class MineFragment extends Fragment {
         RequestBody requestFile = RequestBody.create(MediaType.parse("multipart/form-data"), file);
         MultipartBody.Part body = MultipartBody.Part.createFormData("file", file.getName(), requestFile);
 
-        Call<Translation> call = RetrofitUtil.getInstance(Constant.UMS3_CLIENT2.getBaseUrl()).create(PostRequest_Interface.class).upload(uid, body);
+        Call<Translation> call = new RetrofitUtil(Constant.UMS3_CLIENT2.getBaseUrl()).create(PostRequest_Interface.class).upload(uid, body);
 
         call.enqueue(new Callback<Translation>() {
             @Override

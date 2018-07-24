@@ -53,55 +53,7 @@ public class SettingActivity extends AppCompatActivity {
                 startActivity(new Intent(SettingActivity.this, LoginActivity.class));
             }
         });
-
     }
 
-
-    /**
-     * 根据网络url 得到 bitmap
-     * desc测试功能
-     * @return
-     * @throws IOException
-     */
-    public Bitmap getBitmap() {
-
-        final String path = Environment.getExternalStorageDirectory() + "/aaa/bbb/";
-        final Bitmap[] bitmap = new Bitmap[1];
-
-        String downloadUrl = "user/qrcode.jpg";
-
-        Call<ResponseBody> responseBodyCall = RetrofitUtil.getInstance(Constant.DEFAULT.getBaseUrl()).create(PostRequest_Interface.class).downloadFile(downloadUrl);
-
-        responseBodyCall.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, final Response<ResponseBody> response) {
-                Log.e("vivi", response.message() + "  length  " + response.body().contentLength() + "  type " + response.body().contentType());
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        InputStream is = response.body().byteStream();
-                        try {
-                            OutputStream os = new FileOutputStream(path + "demo.jpg");
-                            int len;
-                            byte[] buff = new byte[1024];
-                            while ((len = is.read(buff)) != -1) {
-                                os.write(buff, 0, len);
-                            }
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                        bitmap[0] = BitmapFactory.decodeStream(is);
-                    }
-                }).start();
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                t.printStackTrace();
-                Log.e("vivi", t.getMessage() + "  " + t.toString());
-            }
-        });
-        return bitmap[0];
-    }
 
 }
