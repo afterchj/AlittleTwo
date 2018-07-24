@@ -24,6 +24,7 @@ import android.widget.Toast;
 
 import com.example.after.alittletwo.entity.Constant;
 import com.example.after.alittletwo.entity.Translation;
+import com.example.after.alittletwo.util.DynamicPermissionCheck;
 import com.example.after.alittletwo.util.PostRequest_Interface;
 import com.example.after.alittletwo.util.RetrofitUtil;
 import com.example.after.alittletwo.views.MyImageView;
@@ -81,6 +82,7 @@ public class MineFragment extends Fragment {
         mImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                new DynamicPermissionCheck(getActivity()).checkPermission();
                 showChoosePicDialog();
             }
         });
