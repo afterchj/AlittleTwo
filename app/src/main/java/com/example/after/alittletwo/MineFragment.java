@@ -200,6 +200,7 @@ public class MineFragment extends Fragment {
 
         Call<Translation> call = new RetrofitUtil(Constant.UMS3_CLIENT2.getBaseUrl()).create(PostRequest_Interface.class).upload(uid, body);
 
+
         call.enqueue(new Callback<Translation>() {
             @Override
             public void onResponse(Call<Translation> call, Response<Translation> response) {

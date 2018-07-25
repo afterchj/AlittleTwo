@@ -10,11 +10,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></include>
 
-    <TextView
+    <ListView
+        android:id="@+id/spList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="朋友圈..."
-        android:textSize="25sp" />
+        android:layout_height="wrap_content"></ListView>
+
 
 </LinearLayout>

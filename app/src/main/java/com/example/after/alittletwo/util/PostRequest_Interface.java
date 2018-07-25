@@ -1,5 +1,8 @@
 package com.example.after.alittletwo.util;
 
+import android.content.Intent;
+
+import com.example.after.alittletwo.entity.ResponseContent;
 import com.example.after.alittletwo.entity.Translation;
 
 import okhttp3.MultipartBody;
@@ -10,6 +13,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
+import retrofit2.http.Path;
 import retrofit2.http.Streaming;
 import retrofit2.http.Url;
 
@@ -18,7 +22,7 @@ import retrofit2.http.Url;
  */
 
 public interface PostRequest_Interface {
-    @POST("upload")
+    @POST("heads/upload")
     @Multipart
     Call<Translation> upload(@Part("uid") RequestBody uid, @Part MultipartBody.Part file);
 
@@ -26,4 +30,9 @@ public interface PostRequest_Interface {
     @GET
     Call<ResponseBody> downloadFile(@Url String fileUrl);
 
+    @GET("spfile/hottest/p{page}.json")
+    Call<ResponseContent> getHottest(@Path("page") Integer page);
+
+    @GET("spfile/newest/p{page}.json")
+    Call<ResponseBody> getNewest(@Path("page") Integer page);
 }
