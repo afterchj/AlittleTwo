@@ -52,12 +52,12 @@ public class FindFragment extends Fragment {
                 Gson gson = new Gson();
                 JsonArray data = response.body().getData();
 //                list = new Gson().fromJson(data, ArrayList.class);
-                Log.e("size", "data.size=" + data.size());
+//                Log.e("size", "data.size=" + data.size());
                 for (int i = 0; i < data.size(); i++) {
                     ResponseContent.Content content = gson.fromJson(data.get(i), ResponseContent.Content.class);
                     content.setDownloadPath(content.getDownloadPath());
                     content.setIconPath(content.getIconPath());
-                    System.out.println("--DownloadPath--" + content.getDownloadPath());
+//                    System.out.println("--DownloadPath--" + content.getDownloadPath());
                     list.add(content);
                 }
                 SPAdapter adapter = new SPAdapter(getActivity(), list);

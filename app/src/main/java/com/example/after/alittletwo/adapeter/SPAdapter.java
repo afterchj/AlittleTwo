@@ -14,7 +14,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.VideoView;
 
-import com.example.after.alittletwo.NyChattingListAdapter;
 import com.example.after.alittletwo.R;
 import com.example.after.alittletwo.entity.ResponseContent;
 import com.example.after.alittletwo.views.MyImageView;
