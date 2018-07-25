@@ -1,7 +1,5 @@
 package com.example.after.alittletwo.util;
 
-import android.content.Intent;
-
 import com.example.after.alittletwo.entity.ResponseContent;
 import com.example.after.alittletwo.entity.Translation;
 
@@ -34,5 +32,5 @@ public interface PostRequest_Interface {
     Call<ResponseContent> getHottest(@Path("page") Integer page);
 
     @GET("spfile/newest/p{page}.json")
-    Call<ResponseBody> getNewest(@Path("page") Integer page);
+    Call<ResponseContent> getNewest(@Path("page") Integer page);
 }

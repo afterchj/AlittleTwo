@@ -9,10 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.MediaController;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.VideoView;
 
 import com.example.after.alittletwo.R;
 import com.example.after.alittletwo.entity.ResponseContent;
@@ -63,28 +61,25 @@ public class SPAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        VileHold hold ;
+        VileHold hold;
         Uri uri = Uri.parse(list.get(i).getDownloadPath());
-       if (view==null){
-           view = mInflater.inflate(R.layout.listitem_sp, null);
-           hold=new VileHold();
+        if (view == null) {
+            view = mInflater.inflate(R.layout.listitem_sp, null);
+            hold = new VileHold();
 //        textView = view.findViewById(R.id.sp_text);
 //        videoView = view.findViewById(R.id.sp);
-           hold.sp_name = view.findViewById(R.id.sp_name);
-           hold.sp_desc = view.findViewById(R.id.sp_desc);
-           hold.sp_img = view.findViewById(R.id.sp_img);
-           hold.sp_icon = view.findViewById(R.id.sp_icon);
-
-           hold.sp_name.setText(list.get(i).getName());
-           hold.sp_desc.setText(list.get(i).getLable()+list.get(i).getDownloadPath());
-           hold.sp_img.setImageResource(imageIds[i % 4]);
-           hold.sp_icon.setImageURL(list.get(i).getIconPath());
-           view.setTag(hold);
-
-       }else {
-           hold = (VileHold) view.getTag();
-       }
-
+            hold.sp_name = view.findViewById(R.id.sp_name);
+            hold.sp_desc = view.findViewById(R.id.sp_desc);
+            hold.sp_img = view.findViewById(R.id.sp_img);
+            hold.sp_icon = view.findViewById(R.id.sp_icon);
+            view.setTag(hold);
+        } else {
+            hold = (VileHold) view.getTag();
+        }
+        hold.sp_name.setText(list.get(i).getName());
+        hold.sp_desc.setText(list.get(i).getLable() + list.get(i).getDownloadPath());
+        hold.sp_img.setImageResource(imageIds[i % 4]);
+        hold.sp_icon.setImageURL(list.get(i).getIconPath());
 //        textView.setText(list.get(i).getLable());
 //        //设置视频控制器
 //        videoView.setMediaController(new MediaController(activity));
