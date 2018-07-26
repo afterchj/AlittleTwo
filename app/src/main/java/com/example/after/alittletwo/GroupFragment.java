@@ -65,6 +65,7 @@ public class GroupFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getActivity(), ActivityChat.class);
                 intent.putExtra("mineid", "b4d41be2c70144eca7001e95b6078114");
+                intent.putExtra("yourid", "f8d95cf3a35e412099b333e1cd32f850");
                 intent.putExtra("userid", "f8d95cf3a35e412099b333e1cd32f850");
                 intent.putExtra("taskid", "532ac0f3844444e0bd334818953c5474");
                 intent.putExtra("name", "陌生人");

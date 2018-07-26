@@ -18,7 +18,7 @@
             android:layout_gravity="bottom"
             android:layout_marginBottom="5dp"
             android:layout_marginLeft="220dp"
-            android:text="王大锤"
+            android:text="@string/nick_name"
             android:textColor="@color/white"
             android:textStyle="bold" />
 

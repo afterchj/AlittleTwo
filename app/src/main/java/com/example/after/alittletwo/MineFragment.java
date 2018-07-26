@@ -72,7 +72,7 @@ public class MineFragment extends Fragment {
         pref = PreferenceManager.getDefaultSharedPreferences(getContext());
         nameView = view.findViewById(R.id.showName);
         setting = view.findViewById(R.id.mySetting);
-        nameView.setText(pref.getString("account", "王大锤"));
+//        nameView.setText(pref.getString("account", "王大锤"));
         setting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
