@@ -1,6 +1,9 @@
 package com.example.after.alittletwo;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -29,6 +32,10 @@ import retrofit2.Response;
  * Created by after on 2018/7/21.
  */
 public class FindFragment extends Fragment {
+
+
+    private String filePath = Environment.getExternalStorageDirectory() + "/aaa/chat_icon.jpg";
+    private Bitmap bitmap;
     private ListView listView;
     private SPAdapter spAdapter;
     private int hotPage = 1;
@@ -39,6 +46,8 @@ public class FindFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.home_fragment, container, false);
         listView = view.findViewById(R.id.spList);
+
+        bitmap = BitmapFactory.decodeFile(filePath);
         initList(1, true);
         listView.setOnScrollListener(new AbsListView.OnScrollListener() {
             int lastItem;
@@ -51,7 +60,7 @@ public class FindFragment extends Fragment {
                         initList(hotPage, true);
 //                        Toast.makeText(getActivity(), "下拉加载更多数据", Toast.LENGTH_SHORT).show();
                     }
-                    if (lastItem == 1) {
+                    if (lastItem == 0) {
                         newPage++;
                         initList(newPage, false);
                     }
@@ -61,13 +70,13 @@ public class FindFragment extends Fragment {
             @Override
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                 lastItem = firstVisibleItem + visibleItemCount - 1;
-//                Log.e("tip", "firstVisibleItem=" + firstVisibleItem + ",lastItem=" + lastItem);
+                Log.e("tip", "firstVisibleItem=" + firstVisibleItem + ",lastItem=" + lastItem);
             }
         });
         return view;
     }
 
-    public void initList(int page, boolean flag) {
+    public void initList(int page, final boolean flag) {
         Call<ResponseContent> responseBodyCall;
         if (flag) {
             responseBodyCall = new RetrofitUtil(Constant.UMS3_CLIENT2.getBaseUrl()).create(PostRequest_Interface.class).getHottest(page);
@@ -81,15 +90,22 @@ public class FindFragment extends Fragment {
                 Gson gson = new Gson();
                 JsonArray data = response.body().getData();
 //                Log.e("size", "data.size=" + data.size());
-                for (int i = 0; i < data.size(); i++) {
-                    ResponseContent.Content content = gson.fromJson(data.get(i), ResponseContent.Content.class);
-                    content.setDownloadPath(content.getDownloadPath());
-                    content.setIconPath(content.getIconPath());
-//                    System.out.println(content.getName() + ":" + content.getDownloadPath());
-                    list.add(content);
+                if (data != null && data.size() > 0) {
+                    for (int i = 0; i < data.size(); i++) {
+                        ResponseContent.Content content = gson.fromJson(data.get(i), ResponseContent.Content.class);
+                        content.setDownloadPath(content.getDownloadPath());
+                        content.setIconPath(content.getIconPath());
+//                        System.out.println(content.getName() + ":" + content.getDownloadPath());
+                        list.add(content);
+                    }
+                    spAdapter = new SPAdapter(getActivity(), bitmap, list);
+                    listView.setAdapter(spAdapter);
+                    if (flag && hotPage > 1) {
+//                        list.subList(list.size() - 2, list.size());
+                        listView.setSelection(1);
+                        spAdapter.notifyDataSetChanged();
+                    }
                 }
-                spAdapter = new SPAdapter(getActivity(), list);
-                listView.setAdapter(spAdapter);
             }
 
             @Override

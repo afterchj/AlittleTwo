@@ -34,6 +34,7 @@ public class ResponseContent {
         String downloadPath;
         String lable;
         String iconPath;
+        String modifyTime;
 
         public String getDownloadPath() {
             return downloadPath;
@@ -63,8 +64,18 @@ public class ResponseContent {
             return name;
         }
 
+        public String getModifyTime() {
+            return modifyTime;
+        }
+
+        public void setModifyTime(String modifyTime) {
+            this.modifyTime = modifyTime;
+        }
+
         public void setName(String name) {
             this.name = name;
+
+
         }
     }
 
