@@ -5,12 +5,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.widget.AbsListView;
@@ -20,10 +17,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.after.alittletwo.entity.Constant;
-import com.example.after.alittletwo.util.BitmapFileSetting;
-import com.example.after.alittletwo.util.PostRequest_Interface;
-import com.example.after.alittletwo.util.RetrofitUtil;
 import com.lzy.okhttputils.OkHttpUtils;
 import com.lzy.okhttputils.callback.StringCallback;
 
@@ -34,10 +27,6 @@ import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Response;
-import okhttp3.ResponseBody;
-import retrofit2.Callback;
-
-import static android.graphics.BitmapFactory.decodeFile;
 
 /**
  * Created by after on 2018/7/22.
@@ -52,7 +41,7 @@ public class ActivityChat extends AppCompatActivity {
     private ListView lvChat;
     private NyChattingListAdapter myChattingAdapter;
     private Data_ReceiverNews data_receiverNews;
-    private List<Data_ReceiverNews.NewsBean> newsBeanList = new ArrayList<Data_ReceiverNews.NewsBean>();
+    private List<Data_ReceiverNews.NewsBean> newsBeanList = new ArrayList<>();
     private String userid, taskid;
     private int allcount;
     private Bitmap bitmap;
