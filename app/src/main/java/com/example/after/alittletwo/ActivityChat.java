@@ -72,8 +72,8 @@ public class ActivityChat extends AppCompatActivity {
         setContentView(R.layout.activitychat);
         bitmap = BitmapFactory.decodeFile(filePath);
         initView();
-                userid = "d8428fb4e425425db75c1c7d1e47bbc0";//苏小美;
-//        userid = "d35558c810fd4b9ea3b7482af39ad51d";//王大锤
+//                userid = "d8428fb4e425425db75c1c7d1e47bbc0";//苏小美;
+        userid = "d35558c810fd4b9ea3b7482af39ad51d";//王大锤
         taskid = "cd48e5b34c29448c98d20fa6869c3647";
         Intent intent = getIntent();
         String name = intent.getStringExtra("name");
@@ -82,7 +82,8 @@ public class ActivityChat extends AppCompatActivity {
         String yourId = intent.getStringExtra("yourid");
         String topicId = intent.getStringExtra("taskid");
         if (friendId != null && !friendId.isEmpty()) {
-            userid = yourId;
+//            userid = yourId;
+            userid = friendId;
         }
         if (topicId != null && !topicId.isEmpty()) {
             taskid = topicId;

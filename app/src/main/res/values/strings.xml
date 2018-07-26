@@ -2,8 +2,9 @@
     <string name="app_name">AlittleTwo</string>
     <string name="normal_color">#0093fe</string>
 
-    <string name="nick_name">苏小美</string>
-    <string name="your_name">王大锤</string>
+    <string name="nick_name">王大锤</string>
+    <string name="temp_name">管理员</string>
+    <string name="your_name">苏小美</string>
     <array name="tab_main_title">
         <item>聊天</item>
         <item>朋友</item>
